@@ -14,7 +14,6 @@ public class StageManager : MonoBehaviour
     public delegate void StageClear();
     public StageClear stageClear;
 
-    public int maxStage;
 
     public void CreateStage()
     {

@@ -11,8 +11,10 @@ public class GameManager : MonoBehaviour
     public float cleartime;
     public Text textStageNumber;
 
-
     public GameObject clearPanel;
+    public GameObject fnishPanel;
+
+
     void Start()
     {
         //ステージ数ロード
@@ -24,6 +26,8 @@ public class GameManager : MonoBehaviour
         stageManager.CreateStage();
         stageManager.stageClear += Cleared;
         clearPanel.SetActive(false);
+
+        StageZero();
     }
 
     public void Cleared()
@@ -46,6 +50,7 @@ public class GameManager : MonoBehaviour
         stageManager.CreateStage();
         clearPanel.SetActive(false);
         StageNumber();
+        StageFinish();
     }
 
     public void OnResetButton()
@@ -59,6 +64,25 @@ public class GameManager : MonoBehaviour
         textStageNumber.text = currentStage + "";
         //ステージ数セーブ
         ES3.Save<int>("Stagekey", currentStage);
+    }
+
+    //最後のステージクリアしたら
+    public void StageFinish()
+    {
+        if (currentStage == 5) //最終ステージの次の数字にする
+        {
+            //Debug.Log("ステージ5");
+            fnishPanel.SetActive(true);
+        }      
+    }
+
+    //ステージ0を保存しておく
+    public void StageZero()
+    {
+        if (currentStage == 0)
+        {
+            Debug.Log("ステージ0");
+        }
     }
 
 }
