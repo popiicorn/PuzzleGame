@@ -37,6 +37,9 @@ public class GameManager : MonoBehaviour
 
     IEnumerator ClearStage()
     {
+        Invoke("StageFinish", 0.15f);
+        //StageFinish();
+
         clearPanel.SetActive(true);
         yield return new WaitForSeconds(cleartime);
         currentStage++;
@@ -50,13 +53,31 @@ public class GameManager : MonoBehaviour
         stageManager.CreateStage();
         clearPanel.SetActive(false);
         StageNumber();
-        StageFinish();
+
     }
 
     public void OnResetButton()
     {
         stageManager.DestroyStage();
         stageManager.CreateStage();
+    }
+
+    //リスタートさせる
+    public void OnRestartButton()
+    {
+        stageManager.DestroyStage();
+
+        //ステージ0をロード
+        currentStage = ES3.Load("StageZerokey", currentStage);
+
+        //ステージ数表示
+        textStageNumber.text = "" + currentStage;
+
+        //ステージ0に置き換える
+        stageManager.LoadStageFromText(currentStage);
+        stageManager.CreateStage();
+
+        Invoke("FnishPanel", 0.5f);
     }
 
     public void StageNumber()
@@ -69,9 +90,8 @@ public class GameManager : MonoBehaviour
     //最後のステージクリアしたら
     public void StageFinish()
     {
-        if (currentStage == 5) //最終ステージの次の数字にする
+        if (currentStage == 100) //最終ステージの数字にする
         {
-            //Debug.Log("ステージ5");
             fnishPanel.SetActive(true);
         }      
     }
@@ -81,8 +101,14 @@ public class GameManager : MonoBehaviour
     {
         if (currentStage == 0)
         {
-            Debug.Log("ステージ0");
+            ES3.Save<int>("StageZerokey", currentStage);
         }
+    }
+
+    //ステージ0を保存しておく
+    public void FnishPanel()
+    {
+        fnishPanel.SetActive(false);
     }
 
 }
