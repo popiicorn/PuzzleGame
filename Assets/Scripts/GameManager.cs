@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject clearPanel;
     public GameObject fnishPanel;
+    public GameObject tutorialPanel;
 
 
     void Start()
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour
         clearPanel.SetActive(false);
 
         StageZero();
+        Tutorial();
     }
 
     public void Cleared()
@@ -109,6 +111,26 @@ public class GameManager : MonoBehaviour
     public void FnishPanel()
     {
         fnishPanel.SetActive(false);
+    }
+
+
+    //ステージ0の時にチュートリアル表示
+    public void Tutorial()
+    {
+        if (currentStage == 0)
+        {
+            tutorialPanel.SetActive(true);
+        }
+    }
+
+    public void TutorialButtonBase()
+    {
+        tutorialPanel.SetActive(false);
+    }
+
+    public void TutorialButton()
+    {
+        Invoke("TutorialButtonBase", 0.5f);
     }
 
 }
